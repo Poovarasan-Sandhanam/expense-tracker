@@ -1,20 +1,16 @@
-import React, { createContext, ReactNode } from 'react';
+import { createContext, ReactNode } from 'react';
 
 interface AuthContextProps {
   login: (email: string, password: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
-  login: () => {}
+  login: () => {},
 });
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (email: string, password: string) => {
-    alert(`Logged in with ${email}`);
+    alert(`Logging in with ${email}`);
   };
 
   return (
