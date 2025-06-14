@@ -16,13 +16,10 @@ export default function Page() {
     loadData();
   }, [loadData])
 
-  console.log("transactions",transactions);
-  console.log("summary", summary);
-  console.log("useId",  user.id);
+  // console.log("transactions",transactions);
+  // console.log("summary", summary);
+  // console.log("useId",  user.id);
   
-  
-  
-
   return (
     <View>
       <SignedIn>
