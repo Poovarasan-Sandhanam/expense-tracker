@@ -64,9 +64,17 @@ export default function SignUpScreen() {
   };
 
   if (pendingVerification) {
-    return (
-      <View style={styles.verificationContainer}>
-        <Text style={styles.verificationTitle}>Verify your email</Text>
+  return (
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      enableOnAndroid={true}
+      enableAutomaticScroll={true}
+      extraScrollHeight={20}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Verify your email</Text>
+        <Text style={styles.subtitle}>We've sent a code to {emailAddress}</Text>
 
         {error ? (
           <View style={styles.errorBox}>
@@ -84,14 +92,32 @@ export default function SignUpScreen() {
           placeholder="Enter your verification code"
           placeholderTextColor="#9A8478"
           onChangeText={setCode}
+          keyboardType="number-pad"
         />
 
         <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
           <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={async () => {
+            try {
+              await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+              setError('');
+            } catch (err) {
+              const firstError = err?.errors?.[0];
+              setError(firstError?.message || 'Failed to resend code. Try again later.');
+            }
+          }}
+          style={styles.linkResend}
+        >
+          <Text style={styles.linkText}>Resend Code</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
+    </KeyboardAwareScrollView>
+  );
+}
+
 
   return (
     <KeyboardAwareScrollView
