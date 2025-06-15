@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
 import { Alert } from 'react-native';
 
-const API_URL = "https://expense-tracker-6kqz.onrender.com/api";
-
+// const API_URL = "https://expense-tracker-6kqz.onrender.com/api";
+const API_URL = "http://localhost:5001/api";
 export const useTransactions = (userId) => {
     const [transactions, setTransactions] = useState([]);
     const [summary, setSummary] = useState({
@@ -25,7 +25,7 @@ export const useTransactions = (userId) => {
 
     const fetchSummary = useCallback(async () => {
         try {
-            const response = await fetch(`${API_URL}/transactions/summary/${userId}`);      
+            const response = await fetch(`${API_URL}/transactions/summary/${userId}`);
             const data = await response.json();
             setSummary(data);
         } catch (error) {
@@ -47,15 +47,15 @@ export const useTransactions = (userId) => {
     }, [fetchTransactions, fetchSummary, userId])
 
     const deleteTransaction = async (id) => {
-       
+
         try {
-            const response = await fetch(`${API_URL}/transactions/${id}`,{method:"DELETE"});
-            if(!response.ok) throw new Error("Failed to delete transaction");
+            const response = await fetch(`${API_URL}/transactions/${id}`, { method: "DELETE" });
+            if (!response.ok) throw new Error("Failed to delete transaction");
         } catch (error) {
             console.log("Error deleting transaction:", error);
             Alert.alert("Error", error.message)
-        } 
+        }
     }
 
-    return { transactions,summary,isLoading,loadData,deleteTransaction}
+    return { transactions, summary, isLoading, loadData, deleteTransaction }
 }
