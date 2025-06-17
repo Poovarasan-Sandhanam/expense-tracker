@@ -18,7 +18,7 @@ export const useTransactions = (userId) => {
             const data = await response.json();
             setTransactions(data);
         } catch (error) {
-            console.error("Error Fetching transactions:", error);
+            console.log("Error Fetching transactions:", error);
         }
     }, [userId]);
 
